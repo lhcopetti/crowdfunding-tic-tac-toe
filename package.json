@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "buid": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^14.2.4",
+    "react": "^18.3.1",
+    "react-cookie": "^7.1.4",
+    "react-dom": "^18.3.1"
+  }
+}
