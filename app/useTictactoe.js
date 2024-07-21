@@ -1,5 +1,6 @@
 
 'use client';
+import next from 'next';
 import { useState } from 'react';
 
 
@@ -10,14 +11,13 @@ const useTictactoe = () => {
     const [board, setBoard] = useState(initialBoard);
     const [currentPlayer, setCurrentPlayer] = useState('X');
 
-    const noWinner = { player: null, cells: []};
-    const [winner, setWinner] = useState(noWinner);
+    const [winner, setWinner] = useState(null);
 
     const players = ['O', 'X'];
-    const nextPlayer = () => players[(players.indexOf(currentPlayer) + 1) % players.length];
+    const getCurrentPlayer = () => players[(players.indexOf(currentPlayer) + 1) % players.length];
 
     const updateCurrentPlayer = () => {
-        setCurrentPlayer(nextPlayer());
+        setCurrentPlayer(getCurrentPlayer());
     }
 
     const updateBoard = (index, player) => {
@@ -65,8 +65,8 @@ const useTictactoe = () => {
 
     const playMove = (x, y) => {
 
-        if (getWinner() != null) {
-            console.log(`The game has already ended. The winner is: ${winner}`);
+        if (getGameEnded()) {
+            console.log(`The game has already ended.`);
             return;
         }
 
@@ -82,20 +82,18 @@ const useTictactoe = () => {
         updateCurrentPlayer();
     }
 
-    const getWinner = () => winner.player
-
     const getCellAt = (x, y) => board[x * 3 + y];
 
-    const getCurrentPlayer = () => currentPlayer;
+    const getGameEnded = () => winner != null || board.every(x => x);
 
-    const getWinningCells = () => winner.cells;
+    const getWinnerData = () => winner
 
     return {
+        playMove,
         getCellAt,
         getCurrentPlayer,
-        playMove,
-        getWinner,
-        getWinningCells
+        getGameEnded,
+        getWinnerData
     };
 
 }
