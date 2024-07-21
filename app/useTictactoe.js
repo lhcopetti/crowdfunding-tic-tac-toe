@@ -1,14 +1,12 @@
 
 'use client';
-import next from 'next';
 import { useState } from 'react';
 
 
 const useTictactoe = () => {
-    const initialBoard = [];
-    for (let i = 0; i < 9; i++) initialBoard[i] = '';
-
+    const initialBoard = Array(3).fill([...Array(3).fill('')]);
     const [board, setBoard] = useState(initialBoard);
+
     const [currentPlayer, setCurrentPlayer] = useState('X');
 
     const [winner, setWinner] = useState(null);
@@ -20,8 +18,11 @@ const useTictactoe = () => {
         setCurrentPlayer(getCurrentPlayer());
     }
 
-    const updateBoard = (index, player) => {
-        const newBoard = board.map((v, i) => i == index ? player : v);
+    const copyBoard = () => board.map(x => [...x]);
+
+    const updateBoard = (x, y, player) => {
+        const newBoard = copyBoard();
+        newBoard[x][y] = player;
         setBoard(newBoard);
         return newBoard;
     }
@@ -40,7 +41,7 @@ const useTictactoe = () => {
         const steps = 3;
         const winningCells = [];
 
-        const initialValue = board[x * 3 + y];
+        const initialValue = board[x][y];
         if (initialValue == '')
             return null;
 
@@ -49,8 +50,7 @@ const useTictactoe = () => {
         for (let i = 0; i < steps - 1; i++) {
 
             const [newX, newY] = [position[0] + direction[0], position[1] + direction[1]];
-            const newIndex = newX * 3 + newY;
-            if (initialValue != board[newIndex]) {
+            if (initialValue != board[newX][newY]) {
                 return null;
             }
 
@@ -70,27 +70,25 @@ const useTictactoe = () => {
             return;
         }
 
-        const cellIndex = x * 3 + y;
-
-        if (board[cellIndex] != '') {
+        if (board[x][y] != '') {
             console.log(`The cell at position (${x}, ${y}) is not empty`);
             return;
         }
 
-        const newBoard = updateBoard(cellIndex, currentPlayer);
+        const newBoard = updateBoard(x, y, currentPlayer);
         findWinner(newBoard);
         updateCurrentPlayer();
     }
 
-    const getCellAt = (x, y) => board[x * 3 + y];
+    const getCells = copyBoard
 
-    const getGameEnded = () => winner != null || board.every(x => x);
+    const getGameEnded = () => winner != null || board.flat().every(x => x);
 
     const getWinnerData = () => winner
 
     return {
         playMove,
-        getCellAt,
+        getCells,
         getCurrentPlayer,
         getGameEnded,
         getWinnerData

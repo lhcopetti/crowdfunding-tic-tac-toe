@@ -4,14 +4,6 @@ import useTictactoe from './useTictactoe';
 import { useEffect } from 'react';
 
 
-//end the game if there's no winners
-//add point class
-//use cookies?
-//
-//
-//add bootstrap or similar for button?
-//make the rest of the text responsive and center everything
-
 export default function Game(props) {
     const tictactoe = useTictactoe();
 
@@ -34,12 +26,13 @@ export default function Game(props) {
         return tictactoe.getWinnerData().cells.some(element => element[0] == x && element[1] == y);
     }
 
-    const cells = [];
+    const squares = [];
+    const cells = tictactoe.getCells();
     for (let i = 0; i < 9; i++) {
         const x = Math.floor(i / 3);
         const y = i % 3;
-        const square = <Square key={i} x={x} y={y} cellClicked={onCellClicked} currentPlayer={tictactoe.getCurrentPlayer()} value={tictactoe.getCellAt(x, y)} isWinner={isWinnerCell(x, y)} />;
-        cells.push(square);
+        const square = <Square key={i} x={x} y={y} cellClicked={onCellClicked} currentPlayer={tictactoe.getCurrentPlayer()} value={cells[x][y]} isWinner={isWinnerCell(x, y)} />;
+        squares.push(square);
     }
 
     const renderGameResult = () => {
@@ -61,7 +54,7 @@ export default function Game(props) {
             <div className="currentPlayer">Player: {tictactoe.getCurrentPlayer()}</div>
             <div style={{ margin: 5 }}></div>
             <div className="board">
-                {cells}
+                {squares}
             </div>
             <div style={{ margin: 5 }}></div>
             <div style={{ height: '35px', fontSize: '30px'}}> {
