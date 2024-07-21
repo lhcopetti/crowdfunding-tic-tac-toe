@@ -31,8 +31,18 @@
     aspect-ratio: 1;
 }
 
+.square:hover {
+  background-color: rgb(194, 194, 168);
+}
+
 .square-winner {
-    border: 2px solid #F00;
+    box-shadow: inset 0px 0px 5px 5px black;
+    animation: blink-red 2s infinite steps(2, jump-none);
+}
+
+@keyframes blink-red {
+  0% { box-shadow: inset 0px 0px 5px 5px #F00; }
+  100% { box-shadow: inset 0px 0px 5px 5px #000; }
 }
 
 .loader {
