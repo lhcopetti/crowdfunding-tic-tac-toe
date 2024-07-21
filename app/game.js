@@ -22,13 +22,16 @@ export default function Game(props) {
 
     useEffect(() => {
 
-        if (tictactoe.getWinner() != null)
+        if (tictactoe.hasGameEnded)
             props.gameCompleted();
 
-    }, [tictactoe.getWinner()]);
+    }, [tictactoe.hasGameEnded]);
 
     const isWinnerCell = (x, y) => {
-        return tictactoe.getWinningCells().some(element => element[0] == x && element[1] == y);
+        if (tictactoe.getWinnerData() == null)
+            return false;
+
+        return tictactoe.getWinnerData().cells.some(element => element[0] == x && element[1] == y);
     }
 
     const cells = [];
@@ -38,6 +41,19 @@ export default function Game(props) {
         const square = <Square key={i} x={x} y={y} cellClicked={onCellClicked} currentPlayer={tictactoe.getCurrentPlayer()} value={tictactoe.getCellAt(x, y)} isWinner={isWinnerCell(x, y)} />;
         cells.push(square);
     }
+
+    const renderGameResult = () => {
+
+        if (tictactoe.getWinnerData() != null) {
+            return (`Winner is: ${tictactoe.getWinnerData().player}`);
+        }
+
+        if (tictactoe.getGameEnded()) {
+            return ("Game resulted in a draw");
+        }
+
+        return "";
+    };
 
 
     return (
@@ -49,7 +65,7 @@ export default function Game(props) {
             </div>
             <div style={{ margin: 5 }}></div>
             <div style={{ height: '35px', fontSize: '30px'}}> {
-                tictactoe.getWinner() && `Winner is: ${tictactoe.getWinner()}`
+                renderGameResult()
             }
             </div>
             <div style={{ margin: 5 }}></div>
