@@ -15,10 +15,11 @@ export default function HomePage() {
 
     useEffect(() => {
         const totalStartedGamesValue = cookies[totalStartedGamesCookie];
-        if (totalStartedGamesValue !== null) setStartedGames(totalStartedGamesValue);
+        console.log(totalStartedGamesValue);
+        if (totalStartedGamesValue != null) setStartedGames(totalStartedGamesValue);
 
         const totalFinishedGamesValue = cookies[totalFinishedGamesCookie] ?? 0;
-        if (totalFinishedGamesValue !== null) setFinishedGames(totalFinishedGamesValue);
+        if (totalFinishedGamesValue != null) setFinishedGames(totalFinishedGamesValue);
 
         setTimeout(() => setLoading(false), 1000);
         
