@@ -8,14 +8,14 @@ const useTictactoe = () => {
     const [board, setBoard] = useState(initialBoard);
 
     const players = ['X', 'O'];
-    const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+    const [playerIndex, setPlayerIndex] = useState(0);
 
     const [winner, setWinner] = useState(null);
 
-    const getCurrentPlayer = () => players[currentPlayerIndex];
+    const getCurrentPlayer = () => players[playerIndex];
 
     const updateCurrentPlayer = () => {
-        setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
+        setPlayerIndex((playerIndex + 1) % players.length);
     }
 
     const copyBoard = () => board.map(x => [...x]);
