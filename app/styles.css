@@ -1,3 +1,44 @@
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  width: 70vmin;
+  background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game-text-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 60vmin;
+  border: 4px double black;
+}
+
+.game-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.game-tally-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-left: 1px solid black;
+}
+
+.game-text {
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .board {
     display: grid;
     gap: 5px;
@@ -63,4 +104,13 @@
   50% {background-size: 20% 100%,20% 10% ,20% 100%}
   66% {background-size: 20% 100%,20% 100%,20% 10% }
   100%{background-size: 20% 100%,20% 100%,20% 100%}
+}
+
+.restartButton {
+  width: 60vmin;
+  height: 5vmin;
+  font-size: 4vmin;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0px 0px 5px 0px;
 }
