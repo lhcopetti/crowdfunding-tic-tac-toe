@@ -7,15 +7,15 @@ const useTictactoe = () => {
     const initialBoard = Array(3).fill([...Array(3).fill('')]);
     const [board, setBoard] = useState(initialBoard);
 
-    const [currentPlayer, setCurrentPlayer] = useState('X');
+    const players = ['X', 'O'];
+    const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
 
     const [winner, setWinner] = useState(null);
 
-    const players = ['O', 'X'];
-    const getCurrentPlayer = () => players[(players.indexOf(currentPlayer) + 1) % players.length];
+    const getCurrentPlayer = () => players[currentPlayerIndex];
 
     const updateCurrentPlayer = () => {
-        setCurrentPlayer(getCurrentPlayer());
+        setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
     }
 
     const copyBoard = () => board.map(x => [...x]);
@@ -58,7 +58,7 @@ const useTictactoe = () => {
             winningCells.push(position);
         }
 
-        console.log(`Found winner with (${x}, ${y}) and direction: ${direction}, player: ${currentPlayer}`);
+        console.log(`Found winner with (${x}, ${y}) and direction: ${direction}, player: ${getCurrentPlayer()}`);
         setWinner({ player: initialValue, cells: winningCells });
     }
 
@@ -75,7 +75,7 @@ const useTictactoe = () => {
             return;
         }
 
-        const newBoard = updateBoard(x, y, currentPlayer);
+        const newBoard = updateBoard(x, y, getCurrentPlayer());
         findWinner(newBoard);
         updateCurrentPlayer();
     }

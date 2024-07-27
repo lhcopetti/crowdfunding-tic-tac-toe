@@ -22,7 +22,7 @@ export default function HomePage() {
         if (totalFinishedGamesValue != null) setFinishedGames(totalFinishedGamesValue);
 
         setTimeout(() => setLoading(false), 1000);
-        
+
     }, []);
 
     const [startedGames, setStartedGames] = useState(1);
@@ -50,19 +50,28 @@ export default function HomePage() {
 
     const displayLoadingText = (text, value) => {
         const loader = (<div className="loader"></div>);
-        return (<h3>{text}{loading ? loader : value}</h3>);
+        return (<div className='game-text'>{text}{loading ? loader : value}</div>);
     }
 
     return (
-        <>
+        <div className='page'>
             <h1>Have fun playing Tic-Tac-Toe</h1>
-            <div>
+            <div className='game-text-grid'>
+                <div className='game-text-container'>
+                    {displayLoadingText('Total games played: ', finishedGames)}
+                    {displayLoadingText('Total games started: ', startedGames)}
+                </div>
+
+                <div className='game-tally-container'>
+                    {displayLoadingText('X wins: ', finishedGames)}
+                    {displayLoadingText('O wins: ', startedGames)}
+                    {displayLoadingText('Draws: ', startedGames)}
+                </div>
+
             </div>
-            {displayLoadingText('Total games played to completion: ', finishedGames)}
-            {displayLoadingText('Total games started: ', startedGames)}
 
             <Game key={startedGames} gameCompleted={onGameCompleted} />
-            <button style={{ margin: 5, fontSize: '20px' }} onClick={onRestartGameClicked}>Restart Game</button>
-        </>
+            <button className="restartButton" onClick={onRestartGameClicked}>Restart Game</button>
+        </div>
     );
 }
