@@ -2,7 +2,6 @@
 
 import Game from './game';
 import useGameState from './useGameState';
-import { useState, useEffect } from 'react';
 import './styles.css'
 
 export default function HomePage() {
@@ -22,24 +21,26 @@ export default function HomePage() {
         return (<div className='game-text'>{text}{gameState.loading ? loader : value}</div>);
     }
 
+    const currentGameState = gameState.get();
+
     return (
         <div className='page'>
             <h1>Have fun playing Tic-Tac-Toe</h1>
             <div className='game-text-grid'>
                 <div className='game-text-container'>
-                    {displayLoadingText('Total games played: ', gameState.getFinishedGames())}
-                    {displayLoadingText('Total games started: ', gameState.getStartedGames())}
+                    {displayLoadingText('Total games played: ', currentGameState.finishedGames)}
+                    {displayLoadingText('Total games started: ', currentGameState.startedGames)}
                 </div>
 
                 <div className='game-tally-container'>
-                    {displayLoadingText('X wins: ', 37)}
-                    {displayLoadingText('O wins: ', 43)}
-                    {displayLoadingText('Draws: ', 65)}
+                    {displayLoadingText('X wins: ', currentGameState.xWins)}
+                    {displayLoadingText('O wins: ', currentGameState.oWins)}
+                    {displayLoadingText('Draws: ', currentGameState.draws)}
                 </div>
 
             </div>
 
-            <Game key={gameState.getStartedGames()} gameCompleted={onGameCompleted} />
+            <Game key={currentGameState.startedGames} gameCompleted={onGameCompleted} />
             <button className="restartButton" onClick={onRestartGameClicked}>Restart Game</button>
         </div>
     );
