@@ -1,14 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import Game from './game';
 import useGameState from './useGameState';
 import './styles.css'
 
 export default function HomePage() {
 
+    const [boardId, setBoardId] = useState(0);
     const gameState = useGameState();
 
     const onRestartGameClicked = () => {
+        setBoardId(previous => previous + 1);
         gameState.incrementStartedGamesCount();
     }
 
@@ -40,7 +43,7 @@ export default function HomePage() {
 
             </div>
 
-            <Game key={currentGameState.startedGames} gameCompleted={onGameCompleted} />
+            <Game key={boardId} gameCompleted={onGameCompleted} />
             <button className="restartButton" onClick={onRestartGameClicked}>Restart Game</button>
         </div>
     );

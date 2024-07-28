@@ -17,6 +17,9 @@ const useGameState = () => {
     const incrementFinishedGamesCount = () => increment('finishedGames');
 
     const get = () => {
+        if (storage.loading)
+            return {};
+
         const gameState = storage.retrieve();
 
         for (let key in defaultKeys) {
