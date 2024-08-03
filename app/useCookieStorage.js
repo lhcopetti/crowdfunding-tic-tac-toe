@@ -20,7 +20,7 @@ const useCookieStorage = () => {
         setCookie(cookieStorageKey, content);
     }
 
-    const retrieve = () => cookies[cookieStorageKey];
+    const retrieve = () => cookies[cookieStorageKey] ?? {};
 
     return {
         loading,
