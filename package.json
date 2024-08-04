@@ -5,6 +5,7 @@
     "start": "next start -p $PORT"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.620.0",
     "next": "^14.2.4",
     "react": "^18.3.1",
     "react-cookie": "^7.1.4",
